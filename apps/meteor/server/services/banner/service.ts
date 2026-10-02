@@ -89,11 +89,7 @@ export class BannerService extends ServiceClassInternal implements IBannerServic
 
 		const banner = await Banners.findOneById(bannerId);
 		if (!banner) {
-			const { matchedCount } = await Users.setBannerReadById(userId, bannerId);
-
-			if (!matchedCount) {
-				throw new Error('Banner not found');
-			}
+			await Users.setBannerReadById(userId, bannerId);
 
 			void notifyOnUserChange({
 				id: userId,
